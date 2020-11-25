@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from .models import Stromzeiten_table
+from datetime import datetime
+
+now = datetime.now()
 
 def home(request):
-    context = {
-        'data': Stromzeiten_table.objects.all().order_by('-Date')
-    }
+    for items in Stromzeiten_table.objects.all():
+        if items.Quality_ratio == 100:
+            context = {
+              'data': Stromzeiten_table.objects.order_by('Date')
+                 }
+        else:
+            print("nothing")
     return render(request, 'Stromzeiten_app/home.html', context)
 
 def about(request):
@@ -12,7 +19,7 @@ def about(request):
 
 def chart(request):
     context = {
-        'data': Stromzeiten_table.objects.order_by('-Date')[:5]
+        'data': Stromzeiten_table.objects.order_by('Date')
     }
     return render(request, 'Stromzeiten_app/chart.html', context)
 
