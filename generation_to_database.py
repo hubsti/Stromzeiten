@@ -11,7 +11,7 @@ current_date = end_date.strftime("%Y%m%d")
 client = EntsoePandasClient(api_key='444fc771-5d0f-499f-9328-90c05c459219')
 
 start = pd.Timestamp('20201109', tz='Europe/Brussels')
-end = pd.Timestamp(current_date, tz='Europe/Brussels')
+end = pd.Timestamp(current_date, tz='Europe/Brussels') #fda
 country_code = 'DE'
 
 
@@ -29,7 +29,7 @@ generation['Total_Renewables'] = generation['Biomass'] + generation['Geothermal'
 generation['Total'] = generation['Total_Renewables'] + generation['Total_Non_Renewables']
 generation['Renewables_procentaqe'] = (generation['Total_Renewables'] / generation['Total'])*100
 rounded_renewables = generation['Renewables_procentaqe'].round(decimals=1)
-generation['Renewables_procentaqe'] =  rounded_renewables
+generation['Renewables_procentaqe'] = rounded_renewables
 
 print(generation)
 
@@ -59,7 +59,7 @@ SELECT * FROM Stromzeiten_app_generation
 for row in c.fetchall():
     print(row)
 
-#time.sleep(900)
+time.sleep(900)
 
 
 while True:
@@ -127,4 +127,4 @@ while True:
     for row in c.fetchall():
         print(row)
 
-    time.sleep(60)
+    time.sleep(900)

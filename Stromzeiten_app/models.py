@@ -29,3 +29,12 @@ class Generation(models.Model):
     Total = models.IntegerField()
     Renewables_procentaqe = models.IntegerField()
 
+class Stromzeiten_table(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Solar = models.IntegerField()
+    Wind_Offshore = models.IntegerField()
+    Wind_Onshore = models.IntegerField()
+    Total = models.IntegerField()
+    Renewable_Load_ratio = models.IntegerField()
+    Quality_ratio = models.IntegerField()
+    Date = models.CharField(max_length=100)

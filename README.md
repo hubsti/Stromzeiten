@@ -7,3 +7,6 @@ generation_to_database.py :
 Stromzeiten_app:
 
 1. Daten aus der Datenbank werden in Form eines "Blogs" auf der Webseite presentiert
+
+
+    

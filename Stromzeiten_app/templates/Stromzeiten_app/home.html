@@ -4,11 +4,11 @@
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-          <a class="mr-2" href="#">Total Power Generation {{ row.Total }} MW</a>
+          <a class="mr-2" href="#">Total Solar Generation {{ row.Solar }} MW</a>
           <small class="text-muted">{{ row.Date|date:"G:i F d, Y" }}</small>
         </div>
-        <h2><a class="article-title" href="#">Renewable percentage: {{ row.Renewables_procentaqe }} %</a></h2>
-        <p class="article-content"> Total Renewable generation: {{ row.Total_Renewables }} MW </p>
+        <h2><a class="article-title" href="#">Stromzeiten: {{ row.Quality_ratio }} %</a></h2>
+        <p class="article-content"> Wind onshore generation: {{ row.Wind_Onshore }} MW </p>
       </div>
     </article>
     {% endfor %}
