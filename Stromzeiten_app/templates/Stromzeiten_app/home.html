@@ -1,12 +1,93 @@
 {% extends "Stromzeiten_app/base.html" %}
 {% block content %}
-    <h2>Verantwortungsbewusst mit grüner Energie!</h2>
-    <h4>Aktuelle Uhrzeit und Datum: {% now "H:i, d.mY " %}</h4>
-    {% now "H:i, d.mY " as curren%}
-
-     <div id="container" style="width: 100%;">
-    <canvas id="myChart"></canvas>
+    <div id="test" style="width: 100%;">
+   <div class="container-fluid">
+    <div class="example_row">
+        <div class = row>
+    <div class="col-sm-4">
+        Uhrzeit: {% now "H:i" %}
+    </div>
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4" >
+      <div class="float-right"> {% now "d.m.Y" %}</div>
+    </div>
   </div>
+        </div>
+</div>
+
+    <div class="jumbotron text-center" style="margin-bottom:10px">
+ <h2>Verantwortungsbewusst mit grüner Energie!</h2>
+  <p>Die Erzeugung erneuerbarer Energie deckt zwischen {{ data4.0.Date|date:"G:i"}} und {{ data4.1.Date|date:"G:i"}}  Uhr {{ data4.0.Renewable_Load_ratio}}% der Verbrauch ab</p>
+  <p>Aktuelle Stromzeit: {% if data4.0.Renewable_Load_ratio > 80 %} Best {% elif data4.0.Renewable_Load_ratio < 80 and data4.0.Renewable_Load_ratio > 50 %} Gut {% else%} Schlecht  {% endif %}</p>
+
+    </div>
+    </div>
+
+    <div class="container-fluid">
+    <section class="bg-green text-center">
+    <div class="row">
+    <div class="col-md-6">
+        Beste Stromzeiten heute:
+        {% for row in data1 %}
+    <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
+         {% endfor %}
+    </div>
+    <div class="col-md-6">
+         Beste Stromzeiten morgen:
+     {% for row in data1_forecast %}
+    <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
+         {% endfor %}
+    </div>
+    </div>
+    </section>
+    <section class="bg-yellow text-center">
+    <div class="row">
+    <div class="col-md-6">
+        Gute Stromzeiten heute:
+        {% for row in data2 %}
+    <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
+         {% endfor %}
+    </div>
+    <div class="col-md-6">
+         Gute Stromzeiten morgen:
+     {% for row in data2_forecast %}
+    <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
+         {% endfor %}
+    </div>
+    </div>
+    </section>
+    <section class="bg-red text-center">
+    <div class="row">
+    <div class="col-md-6">
+        Schlechte Stromzeiten heute:
+        {% for row in data3 %}
+    <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
+         {% endfor %}
+    </div>
+    <div class="col-md-6">
+        Schlechte Stromzeiten morgen:
+     {% for row in data3_forecast %}
+    <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
+         {% endfor %}
+    </div>
+    </div>
+    </section>
+    </div>
+
+     <div class="row">
+         <div class="col-sm-6">
+                <div id="container" style="width: 100%;">
+            <canvas id="myChart"></canvas>
+          </div>
+         </div>
+     <div class="col-sm-6">
+                <div id="container" style="width: 100%;">
+            <canvas id="myChart2"></canvas>
+          </div>
+         </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <script>
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -16,7 +97,7 @@ var myChart = new Chart(ctx, {
         labels: [{% for row in data %}'{{ row.Date|date:"G:i" }}',{% endfor %}],
         datasets: [{
             label: '% der besten Stromzeit',
-            data: [{% for row in data %}'{{ row.Quality_ratio }}',{% endfor %}],
+            data: [{% for row in data %}'{{ row.Renewable_Load_ratio }}',{% endfor %}],
             backgroundColor: [
                 'rgba(240, 43, 34, 0.2)',
             ],
@@ -31,7 +112,8 @@ var myChart = new Chart(ctx, {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    suggestedMax: 100
                 }
             }]
         }
@@ -39,20 +121,37 @@ var myChart = new Chart(ctx, {
 });
 </script>
 
-    {% for row in data %}
-        {% if row.Date|date:"H:i, d.mY " > curren %}
-        <article class="media content-section">
-            <div class="media-body">
-                <div class="article-metadata">
-          <a class="mr-2" href="#">Total Solar Generation {{ row.Solar }} MW</a>
-          <small class="text-muted">{{ row.Date|date:"G:i F d, Y" }}</small>
-        </div>
-        <h2><a class="article-title" href="#">Stromzeiten: {{ row.Quality_ratio }} %</a></h2>
-        <p class="article-content"> Wind onshore generation: {{ row.Wind_Onshore }} MW </p>
-      </div>
-    </article>
-        {% endif %}
-    {% endfor %}
+<script>
+var ctx = document.getElementById('myChart2').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [{% for row in data_forecast %}'{{ row.Date|date:"G:i" }}',{% endfor %}],
+        datasets: [{
+            label: '% der besten Stromzeit',
+            data: [{% for row in data_forecast %}'{{ row.Renewable_Load_ratio }}',{% endfor %}],
+            backgroundColor: [
+                'rgba(240, 43, 34, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMax: 100
+                }
+            }]
+        }
+    }
+});
+</script>
 
 
 

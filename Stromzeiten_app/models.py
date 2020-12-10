@@ -37,4 +37,45 @@ class Stromzeiten_table(models.Model):
     Total = models.IntegerField()
     Renewable_Load_ratio = models.IntegerField()
     Quality_ratio = models.IntegerField()
-    Date = models.CharField(max_length=100)
+    Date = models.DateTimeField()
+
+class Beste_table(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Date_start = models.DateTimeField()
+    Date_end = models.DateTimeField()
+
+class Gute_table(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Date_start = models.DateTimeField()
+    Date_end = models.DateTimeField()
+
+class Schlechte_table(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Date_start = models.DateTimeField()
+    Date_end = models.DateTimeField()
+
+
+class Stromzeiten_table_forecast(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Solar = models.IntegerField()
+    Wind_Offshore = models.IntegerField()
+    Wind_Onshore = models.IntegerField()
+    Total = models.IntegerField()
+    Renewable_Load_ratio = models.IntegerField()
+    Quality_ratio = models.IntegerField()
+    Date = models.DateTimeField()
+
+class Beste_table_forecast(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Date_start = models.DateTimeField()
+    Date_end = models.DateTimeField()
+
+class Gute_table_forecast(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Date_start = models.DateTimeField()
+    Date_end = models.DateTimeField()
+
+class Schlechte_table_forecast(models.Model):
+    id = models.IntegerField(primary_key=True)
+    Date_start = models.DateTimeField()
+    Date_end = models.DateTimeField()

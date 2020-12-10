@@ -69,10 +69,10 @@ client = EntsoePandasClient(api_key='444fc771-5d0f-499f-9328-90c05c459219')
 
 
 #start and end date format
-start_date_raw = date.today()
+start_date_raw = date.today()+timedelta(days=1)
 start_date = start_date_raw.strftime("%Y%m%d")
 
-end_date_raw = date.today()+timedelta(days=1)
+end_date_raw = date.today()+timedelta(days=2)
 end_date = end_date_raw.strftime("%Y%m%d")
 
 #quering load and renewable generation forecasts
@@ -102,7 +102,7 @@ renewable.rename(columns={"Wind Offshore": "Wind_Offshore",
                                 "Wind Onshore": "Wind_Onshore", "Renewable/Load_ratio": "Renewable_Load_ratio"}, inplace=True)
 
 
-data_base_connection('Stromzeiten_app_stromzeiten_table', renewable)
+data_base_connection('Stromzeiten_app_stromzeiten_table_forecast', renewable)
 
 
 #Looking for a time spans with Quality_ratio < 50
@@ -112,7 +112,7 @@ df = df[df['equal_or_lower_than_50?'] == True]
 df_r=time_difference_checking(df)
 df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
 dataframe_bad_times = time_periods_checking(df_r,df2)
-data_base_connection('Stromzeiten_app_schlechte_table', dataframe_bad_times)
+data_base_connection('Stromzeiten_app_schlechte_table_forecast', dataframe_bad_times)
 
 #Looking for a time spans with Quality_ratio > 80
 renewable.loc[renewable['Quality_ratio'] >80, 'equal_or_greater_than_80?'] = True
@@ -121,7 +121,7 @@ df = df[df['equal_or_greater_than_80?'] == True]
 df_r=time_difference_checking(df)
 df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
 dataframe_best_times = time_periods_checking(df_r,df2)
-data_base_connection('Stromzeiten_app_beste_table', dataframe_best_times)
+data_base_connection('Stromzeiten_app_beste_table_forecast', dataframe_best_times)
 
 #Looking for a time spans with Quality_ratio between 50 and 80
 renewable.loc[renewable['Quality_ratio'].between(50, 80, inclusive=True), 'between_50_and_80?'] = True
@@ -131,10 +131,4 @@ df=df[df['between_50_and_80?'] == True]
 df_r=time_difference_checking(df)
 df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
 dataframe_good_times = time_periods_checking(df_r,df2)
-data_base_connection('Stromzeiten_app_gute_table', dataframe_good_times)
-
-
-
-
-
-
+data_base_connection('Stromzeiten_app_gute_table_forecast', dataframe_good_times)

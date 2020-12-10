@@ -1,7 +1,7 @@
 body {
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
+  margin-top: 10rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -12,10 +12,34 @@ ul {
   margin: 0;
 }
 
-.bg-steel {
-  background-color: #5ced4c;
+.example_row {
+    margin-top: -90px;
+    margin-bottom: 0px;
 }
 
+.col-md-4{
+    background-color: #f5f3f3;
+}
+
+.col-md-6 {
+  margin-bottom: 20px;
+  border-radius:10px;
+}
+.bg-steel {
+  background-color: #5d6ced;
+}
+.bg-green{
+  border: 2px solid #dddddd;
+  background-color: #21ed61;
+}
+.bg-yellow{
+  border: 2px solid #dddddd;
+  background-color: #edd74b;
+}
+.bg-red{
+  border: 2px solid #dddddd;
+  background-color: #ed8562;
+}
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }
@@ -36,8 +60,9 @@ ul {
   margin-bottom: 20px;
 }
 
+section {padding:2rem;}
 .article-title {
-  color: #5ecb3a;
+  color: #4b7acb;
 }
 
 a.article-title:hover {
