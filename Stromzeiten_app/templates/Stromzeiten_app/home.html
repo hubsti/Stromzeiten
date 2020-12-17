@@ -19,7 +19,7 @@
     <div class="jumbotron text-center" style="margin-bottom:10px">
  <h2>Verantwortungsbewusst mit grüner Energie!</h2>
   <p>Die Erzeugung erneuerbarer Energie deckt zwischen {{ data4.0.Date|date:"G:i"}} und {{ data4.1.Date|date:"G:i"}}  Uhr {{ data4.0.Renewable_Load_ratio}}% der Verbrauch ab</p>
-  <p>Aktuelle Stromzeit: {% if data4.0.Renewable_Load_ratio > 80 %} Best {% elif data4.0.Renewable_Load_ratio < 80 and data4.0.Renewable_Load_ratio > 50 %} Gut {% else%} Schlecht  {% endif %}</p>
+  <p>Aktuelle Stromzeit: {% if data4.0.Quality_ratio > 80 %} Best {% elif data4.0.Quality_ratio < 80 and data4.0.Quality_ratio > 50 %} Gut {% else%} Schlecht  {% endif %}</p>
 
     </div>
     </div>
@@ -33,6 +33,7 @@
     <p> {{ row.Date_start|date:"G:i"}} bis {{ row.Date_end|date:"G:i"}} </p>
          {% endfor %}
     </div>
+        <div style="min-width: 20px"> </div>
     <div class="col-md-6">
          Beste Stromzeiten morgen:
      {% for row in data1_forecast %}
@@ -97,7 +98,7 @@ var myChart = new Chart(ctx, {
         labels: [{% for row in data %}'{{ row.Date|date:"G:i" }}',{% endfor %}],
         datasets: [{
             label: '% der besten Stromzeit',
-            data: [{% for row in data %}'{{ row.Renewable_Load_ratio }}',{% endfor %}],
+            data: [{% for row in data %}'{{ row.Quality_ratio }}',{% endfor %}],
             backgroundColor: [
                 'rgba(240, 43, 34, 0.2)',
             ],
@@ -113,7 +114,7 @@ var myChart = new Chart(ctx, {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    suggestedMax: 100
+                    suggestedMax: 60
                 }
             }]
         }
@@ -129,7 +130,7 @@ var myChart = new Chart(ctx, {
         labels: [{% for row in data_forecast %}'{{ row.Date|date:"G:i" }}',{% endfor %}],
         datasets: [{
             label: '% der besten Stromzeit',
-            data: [{% for row in data_forecast %}'{{ row.Renewable_Load_ratio }}',{% endfor %}],
+            data: [{% for row in data_forecast %}'{{ row.Quality_ratio }}',{% endfor %}],
             backgroundColor: [
                 'rgba(240, 43, 34, 0.2)',
             ],
@@ -145,7 +146,7 @@ var myChart = new Chart(ctx, {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    suggestedMax: 100
+                    suggestedMax: 60
                 }
             }]
         }

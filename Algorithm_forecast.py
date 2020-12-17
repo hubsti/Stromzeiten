@@ -109,26 +109,29 @@ data_base_connection('Stromzeiten_app_stromzeiten_table_forecast', renewable)
 renewable.loc[renewable['Quality_ratio'] <50, 'equal_or_lower_than_50?'] = True
 df = renewable[['Quality_ratio', 'equal_or_lower_than_50?', 'Date']]
 df = df[df['equal_or_lower_than_50?'] == True]
-df_r=time_difference_checking(df)
-df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
-dataframe_bad_times = time_periods_checking(df_r,df2)
-data_base_connection('Stromzeiten_app_schlechte_table_forecast', dataframe_bad_times)
+if not df.empty:
+    df_r=time_difference_checking(df)
+    df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
+    dataframe_bad_times = time_periods_checking(df_r,df2)
+    data_base_connection('Stromzeiten_app_schlechte_table_forecast', dataframe_bad_times)
 
 #Looking for a time spans with Quality_ratio > 80
 renewable.loc[renewable['Quality_ratio'] >80, 'equal_or_greater_than_80?'] = True
 df = renewable[['Quality_ratio', 'equal_or_greater_than_80?', 'Date']]
 df = df[df['equal_or_greater_than_80?'] == True]
-df_r=time_difference_checking(df)
-df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
-dataframe_best_times = time_periods_checking(df_r,df2)
-data_base_connection('Stromzeiten_app_beste_table_forecast', dataframe_best_times)
+if not df.empty:
+    df_r=time_difference_checking(df)
+    df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
+    dataframe_best_times = time_periods_checking(df_r,df2)
+    data_base_connection('Stromzeiten_app_beste_table_forecast', dataframe_best_times)
 
 #Looking for a time spans with Quality_ratio between 50 and 80
 renewable.loc[renewable['Quality_ratio'].between(50, 80, inclusive=True), 'between_50_and_80?'] = True
 df = renewable[['Quality_ratio', 'between_50_and_80?', 'Date']]
 df.reset_index(drop=True)
 df=df[df['between_50_and_80?'] == True]
-df_r=time_difference_checking(df)
-df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
-dataframe_good_times = time_periods_checking(df_r,df2)
-data_base_connection('Stromzeiten_app_gute_table_forecast', dataframe_good_times)
+if not df.empty:
+    df_r=time_difference_checking(df)
+    df2 = df_r[df_r['equal_or_lower_than_15?'] == True]
+    dataframe_good_times = time_periods_checking(df_r,df2)
+    data_base_connection('Stromzeiten_app_gute_table_forecast', dataframe_good_times)
