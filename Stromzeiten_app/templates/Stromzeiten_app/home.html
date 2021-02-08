@@ -16,11 +16,15 @@
         </div>
 </div>
 
-    <div class="jumbotron text-center" style="margin-bottom:10px">
+    <div style="display: flex">
+        <div>
+            <img src="https://logosmarken.com/wp-content/uploads/2020/04/Huawei-Logo.png" alt:"Logo">
+        </div>
+        <div>
  <h2>Verantwortungsbewusst mit grüner Energie!</h2>
   <p>Die Erzeugung erneuerbarer Energie deckt zwischen {{ data4.0.Date|date:"G:i"}} und {{ data4.1.Date|date:"G:i"}}  Uhr {{ data4.0.Renewable_Load_ratio}}% der Verbrauch ab</p>
   <p>Aktuelle Stromzeit: {% if data4.0.Quality_ratio > 80 %} Best {% elif data4.0.Quality_ratio < 80 and data4.0.Quality_ratio > 50 %} Gut {% else%} Schlecht  {% endif %}</p>
-
+</div>
     </div>
     </div>
 
