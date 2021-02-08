@@ -14,22 +14,41 @@ var myChart = new Chart(ctx, {
         datasets: [{
             label: '% der besten Stromzeit',
             data: [{% for row in data %}'{{ row.Quality_ratio }}',{% endfor %}],
-            backgroundColor: [
-                'rgba(240, 43, 34, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-
-            ],
-            borderWidth: 1
+            pointBackgroundColor: function(context) {
+                var index = context.dataIndex;
+                var value = context.dataset.data[index];
+                if (value < 50) {
+                    return '#ed8562'
+                } else if (value  < 80 && value >= 50) {
+                    return '#edd74b'
+                } else {
+                    return '#21ed61'
+                }  
+            },
+            fill: false,
+            pointRadius: 5,
+            pointHoverRadius: 10,
+            borderWidth: 2
         }]
     },
     options: {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: false,
                 }
+            }],
+            xAxes: [{
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 24
+                }
+                //ticks: {
+                    //minor: {'0:30', '1:00'}
+                    //minor: {
+                    //    fontSize: 30
+                    //}
+                //}
             }]
         }
     }
